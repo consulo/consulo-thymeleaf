@@ -56,8 +56,11 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.xml</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <xml.elementDescriptorProvider
+                implementation="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags.ThymeleafElementDescriptorProvider"/>
         <xml.attributeDescriptorsProvider
                 implementation="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.attributes.ThymeleafAttributesProvider"/>
         <xml.attributeDescriptorsProvider
@@ -71,11 +74,19 @@
                                 implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.layout.attributes.LayoutCompletionContributor"/>
         <completion.contributor language="HTML"
                                 implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.springsecurity.attributes.SpringSecurityCompletionContributor"/>
+        <completion.contributor language="HTML"
+                                implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags.ThymeleafBlockCompletionContributor"/>
+        <completion.contributor language="HTML"
+                                implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.attributes.ThymeleafUrlCompletionContributor"/>
+        <completion.contributor language="HTML"
+                                implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.expression.ThymeleafExpressionCompletionContributor"/>
 
         <notificationGroup id="HtmlThymeleaf" displayType="BALLOON" isLogByDefault="true"/>
         <notificationGroup id="HtmlThymeleafLayout" displayType="BALLOON" isLogByDefault="true"/>
         <notificationGroup id="HtmlThymeleafSpringSecurity" displayType="BALLOON" isLogByDefault="true"/>
         <notificationGroup id="UriIgnoreResource" displayType="BALLOON" isLogByDefault="true"/>
+
+        <inspectionSuppressor implementation="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags.ThymeleafBlockInspectionSuppressor"/>
 
     </extensions>
 

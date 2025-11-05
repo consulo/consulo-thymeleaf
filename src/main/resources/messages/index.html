@@ -1,10 +1,13 @@
 <!doctype html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
  <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title th:if="">Title</title>
  </head>
- <body layout:replace="">
-  <div th:value=""></div><label sec:authentication=""> <input> </label>
+ <body layout:title-pattern="${person}">
+  <div th:action=""></div>
+  <div></div><label> <input th:value="" sec:authorize=""> </label>
  </body>
 </html>

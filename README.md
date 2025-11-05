@@ -6,6 +6,7 @@
 - `th:` Thymeleaf core attributes (e.g., `th:text`, `th:if`, `th:each`, and more)
 - `sec:` Spring Security attributes (e.g., `sec:authorize`, `sec:authentication`)
 - `layout:` Layout dialect attributes (e.g., `layout:decorator`, `layout:fragment`)
+- `th:block:` Support for Thymeleaf Synthetic blocks (e.g., `<th:block...></th:block>`)
 
 ## Key Features:
 - Autocompletion for Thymeleaf, Spring Security, and Layout dialect attributes

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2025-06-06
+
+### New Features
+- Added support for Thymeleaf Synthetic <th:block>
+- Added URL completion for th:href and th:action scanning the spring controllers if existing
+
+### Enhancements
+- added missing attributes: th:errors, th:errorclass and th:field
+
 ## [1.1.0] - 2024-09-19
 
 ### New Features
