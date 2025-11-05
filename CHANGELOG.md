@@ -79,7 +79,7 @@ URL Completion	Auto-suggest Spring mappings
 Expression Completion	Rich ${}, *{}, #{} suggestions
 Compatibility	IntelliJ 2023.1–2025.2
 Build	Modern Gradle / Java toolchain setup
-📅 Release Date: 2025-06-06
+📅 Release Date: 2025-11-05
 🧾 Version: 1.2.0
 
 ## [1.1.0] - 2024-09-19
