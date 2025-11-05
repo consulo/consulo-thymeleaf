@@ -2,6 +2,86 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2025-06-06
+
+### New Features
+- Added support for Thymeleaf Synthetic `<th:block>`
+- Added URL completion for th:href and th:action scanning the spring controllers if existing
+- 🚀 Thymeleaf Support Plugin v1.2.0
+Enhancements for IntelliJ IDEA 2023.1 – 2025.2
+
+This release brings major improvements to Thymeleaf development in IntelliJ IDEA — including full support for `<th:block>`, smart URL and expression completion, and deeper Spring integration.
+
+### New Features
+#### 1. Support for `<th:block>` Synthetic Tags
+- Added full IDE recognition of Thymeleaf’s non-rendered `<th:block>` tag.
+- New contributor and descriptor classes:
+- ThymeleafBlockCompletionContributor
+- ThymeleafBlockTagDescriptor
+- SimpleThymeleafAttributeDescriptor
+- ThymeleafBlockInspectionSuppressor
+- Enables IntelliJ autocompletion and validation for `<th:block>` elements.
+
+#### 2. Smart URL Completion for th:href and th:action
+  - Automatically scans Spring controllers for @GetMapping, @PostMapping, etc.
+  - Suggests URL paths directly in Thymeleaf templates:
+    - `<a th:href="@{/users}">...</a>`
+    - `<form th:action="@{/login}" method="post">...</form>`
+
+##### Implemented in:
+  - ControllerMappingInfo
+  - ControllerUrlUtil
+  - ThymeleafUrlCompletionContributor
+
+#### 3. Spring Model Attribute Discovery
+  - Detects @ModelAttribute methods, parameters, and model.addAttribute() calls.
+  - Extracts associated model object names and view contexts for smarter completions.
+  - Implemented in:
+  - ModelAttributeInfo
+  - SpringModelAttributeUtil
+
+#### 4. Expression Completion Overhaul
+  - Context-aware completion for:
+  - ${...} (Variable)
+  - *{...} (Selection)
+  - #{...} (Message)
+  - Auto-inserts correct expression syntax using new insert handlers.
+  - Nested property chain detection and caching for performance.
+
+##### Implemented in:
+ - ThymeleafExpressionCompletionContributor
+ - ThymeleafExpressionInsertHandler
+ - AsteriskInsertHandler, DollarSignInsertHandler, HashTagInsertHandler
+ - ThymeleafExpressionSuggester
+
+### Enhancements
+  - Added missing attributes to autocompletion:
+  - th:errors, th:errorclass, th:field
+  - Expanded attribute descriptions and tooltips.
+  - Improved internal caching for PSI model inspection.
+  - Simplified Gradle build and toolchain configuration (uses Java 17).
+  - Extended IDE compatibility to IntelliJ 2023.1 → 2025.2.
+
+### Developer Quality-of-Life Improvements
+  - Cleaned build.gradle.kts with java.toolchain support and consistent tasks.
+  - Updated CHANGELOG.md and README.md to reflect new features.
+  - Renamed run configuration:
+     - “Run IDE with Plugin” → “Run Plugin with debug”
+  - Reduced redundancy in IntelliJ Gradle setup.
+  - Added detailed debug logging for inspection suppressors.
+
+### Summary
+Area	Improvement
+Template Tags	Full <th:block> support
+Form Handling	Added th:field, th:errors, th:errorclass
+Spring Integration	Model + Controller awareness
+URL Completion	Auto-suggest Spring mappings
+Expression Completion	Rich ${}, *{}, #{} suggestions
+Compatibility	IntelliJ 2023.1–2025.2
+Build	Modern Gradle / Java toolchain setup
+📅 Release Date: 2025-11-05
+🧾 Version: 1.2.0
+
 ## [1.1.0] - 2024-09-19
 
 ### New Features

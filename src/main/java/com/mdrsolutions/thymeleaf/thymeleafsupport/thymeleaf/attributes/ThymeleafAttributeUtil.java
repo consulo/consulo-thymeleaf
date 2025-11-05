@@ -40,6 +40,7 @@ public class ThymeleafAttributeUtil extends AttributeUtil {
                 "th:challenge", "th:charset", "th:cite", "th:classid", "th:codebase", "th:codetype",
                 "th:cols", "th:colspan", "th:compact", "th:content", "th:contenteditable", "th:contextmenu",
                 "th:data", "th:datetime", "th:dir", "th:draggable", "th:dropzone", "th:enctype",
+                "th:errors", "th:errorclass", "th:field",
                 "th:for", "th:form", "th:formaction", "th:formenctype", "th:formmethod", "th:formtarget",
                 "th:frame", "th:frameborder", "th:headers", "th:height", "th:high", "th:hreflang",
                 "th:hspace", "th:http-equiv", "th:icon", "th:id", "th:keytype", "th:kind", "th:label",
@@ -98,6 +99,9 @@ public class ThymeleafAttributeUtil extends AttributeUtil {
         attributeDescriptions.put("th:draggable", "Indicates whether an element can be dragged.");
         attributeDescriptions.put("th:dropzone", "Specifies where an element can be dropped during a drag-and-drop operation.");
         attributeDescriptions.put("th:enctype", "Defines the encoding type of a form when submitting data.");
+        attributeDescriptions.put("th:errors","a specialized attribute which builds a list with all the errors for the specified selector, separated by <br />");
+        attributeDescriptions.put("th:errorclass","allows setting a CSS class to a form input if that field has errors");
+        attributeDescriptions.put("th:field","Applied to a form field tag (input, select, textarea…), it will read the name of the field to be examined from any existing name");
         attributeDescriptions.put("th:for", "Links a label to a form input by its id.");
         attributeDescriptions.put("th:form", "Defines which form an element belongs to.");
         attributeDescriptions.put("th:formaction", "Specifies the action URL for a form element.");

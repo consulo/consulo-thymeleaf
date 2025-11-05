@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.mdrsolutions.thymeleaf.thymeleaf-support</id>
     <name>Thymeleaf Support</name>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <vendor email="michael.d.rodgers.jr@gmail.com" url="https://www.linkedin.com/in/michael-d-rodgers-jr/">Michael D. Rodgers, Jr</vendor>
 
     <description><![CDATA[
@@ -25,8 +25,45 @@
 
     <p>For more information, visit the <a href="https://www.thymeleaf.org">Thymeleaf project website</a>.</p>
     ]]></description>
-
     <change-notes><![CDATA[
+    <h2>Version 1.2.0 - New Features and Enhancements</h2>
+
+    <h3>New Features</h3>
+    <ul>
+      <li><strong>Added support for &lt;th:block&gt; synthetic tags</strong>, enabling IntelliJ IDEA to fully recognize and autocomplete the non-rendered <code>&lt;th:block&gt;</code> element used in Thymeleaf templates.</li>
+      <li><strong>Introduced smart URL completion</strong> for <code>th:href</code> and <code>th:action</code> attributes, automatically detecting mappings from Spring <code>@Controller</code> classes and suggesting valid URL paths.</li>
+      <li><strong>Added Spring model attribute discovery</strong>, providing IntelliJ with awareness of <code>@ModelAttribute</code> methods and parameters to enhance context-based completion and validation.</li>
+      <li><strong>Overhauled expression completion</strong> with intelligent suggestions for <code>${...}</code>, <code>*{...}</code>, and <code>#{...}</code> expressions, including property chain resolution and auto-insertion of proper syntax.</li>
+    </ul>
+
+    <h3>Enhancements</h3>
+    <ul>
+      <li>Added new attribute completions for <code>th:errors</code>, <code>th:errorclass</code>, and <code>th:field</code> to improve support for form validation and binding.</li>
+      <li>Expanded attribute descriptions and tooltips for greater clarity and consistency across Thymeleaf, Layout, and Spring Security dialects.</li>
+      <li>Improved internal caching for PSI-based model inspection, resulting in faster and more responsive code completion.</li>
+      <li>Simplified Gradle build configuration with <code>java.toolchain</code> support and unified Kotlin/Java compile targets for JDK 17.</li>
+      <li>Updated IntelliJ platform compatibility to support versions <strong>2023.1 through 2025.2</strong>.</li>
+    </ul>
+
+    <h3>Developer Experience</h3>
+    <ul>
+      <li>Renamed the default run configuration to <em>“Run Plugin with debug”</em> for clarity during development.</li>
+      <li>Refined project structure and logging to align with current IntelliJ Gradle plugin best practices.</li>
+      <li>Updated documentation, <code>README.md</code>, and <code>CHANGELOG.md</code> to reflect new features and usage details.</li>
+    </ul>
+
+    <h3>Summary</h3>
+    <ul>
+      <li><strong>Template Tags:</strong> Full support for <code>&lt;th:block&gt;</code></li>
+      <li><strong>Form Handling:</strong> Added <code>th:field</code>, <code>th:errors</code>, <code>th:errorclass</code></li>
+      <li><strong>Spring Integration:</strong> Model and Controller awareness for smarter completions</li>
+      <li><strong>URL Completion:</strong> Auto-suggests mappings from Spring controllers</li>
+      <li><strong>Expression Completion:</strong> Rich suggestions for <code>${}</code>, <code>*{}</code>, and <code>#{}</code> expressions</li>
+      <li><strong>Build & Compatibility:</strong> Modernized Gradle setup and extended IDE support</li>
+    </ul>
+
+    <p><em>Release Date: November 5, 2025</em></p>
+
     <h2>Version 1.1.0 - Enhancements and Bug Fixes</h2>
     <h3>New Features</h3>
     <ul>
@@ -52,12 +89,15 @@
     </ul>
     ]]></change-notes>
 
-    <idea-version since-build="231.8109.175" until-build="243.*" />
+    <idea-version since-build="231.0" until-build="252.*" />
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.xml</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <xml.elementDescriptorProvider
+                implementation="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags.ThymeleafElementDescriptorProvider"/>
         <xml.attributeDescriptorsProvider
                 implementation="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.attributes.ThymeleafAttributesProvider"/>
         <xml.attributeDescriptorsProvider
@@ -71,11 +111,19 @@
                                 implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.layout.attributes.LayoutCompletionContributor"/>
         <completion.contributor language="HTML"
                                 implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.springsecurity.attributes.SpringSecurityCompletionContributor"/>
+        <completion.contributor language="HTML"
+                                implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags.ThymeleafBlockCompletionContributor"/>
+        <completion.contributor language="HTML"
+                                implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.attributes.ThymeleafUrlCompletionContributor"/>
+        <completion.contributor language="HTML"
+                                implementationClass="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.expression.ThymeleafExpressionCompletionContributor"/>
 
         <notificationGroup id="HtmlThymeleaf" displayType="BALLOON" isLogByDefault="true"/>
         <notificationGroup id="HtmlThymeleafLayout" displayType="BALLOON" isLogByDefault="true"/>
         <notificationGroup id="HtmlThymeleafSpringSecurity" displayType="BALLOON" isLogByDefault="true"/>
         <notificationGroup id="UriIgnoreResource" displayType="BALLOON" isLogByDefault="true"/>
+
+        <inspectionSuppressor implementation="com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags.ThymeleafBlockInspectionSuppressor"/>
 
     </extensions>
 
