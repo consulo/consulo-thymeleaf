@@ -15,34 +15,24 @@ dependencies {
     implementation("org.jsoup:jsoup:1.16.1")
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 intellij {
     version.set("2023.2.6")
     type.set("IC")
-    plugins.set(listOf("com.intellij.java", "org.jetbrains.kotlin")) // Add dependencies if necessary
+    plugins.set(listOf("com.intellij.java", "org.jetbrains.kotlin"))
     downloadSources.set(true)
     instrumentCode.set(true)
 }
 
 tasks {
-    withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
-    }
-
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
-    sourceSets {
-        main {
-            java.srcDirs("src/main/java")
-            kotlin.srcDirs("src/main/kotlin")
-        }
-    }
-
     patchPluginXml {
-        sinceBuild.set("231.8109.175")  // Match this to the actual IntelliJ version
-        untilBuild.set("243.*")
+        sinceBuild.set("231.0")
+        untilBuild.set("252.*")
     }
 
     signPlugin {
@@ -54,6 +44,7 @@ tasks {
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
+
     buildSearchableOptions {
         enabled = false
     }
