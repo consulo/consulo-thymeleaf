@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.2.0] - 2025-06-06
+## [1.2.0] - 2025-11-05
 
 ### New Features
 - Added support for Thymeleaf Synthetic `<th:block>`
