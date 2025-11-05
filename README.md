@@ -16,3 +16,11 @@
 This plugin is perfect for developers working with Spring Boot and Thymeleaf, reducing the manual effort required to build dynamic templates and enhancing the overall productivity of Thymeleaf-based projects.
 
 For more information, visit the [Thymeleaf project website](https://www.thymeleaf.org).
+
+**🎓 Used In My Course**
+I created this plugin to assist with a course I wrote for LinkedIn Learning,
+👉 HTMX and Spring Boot with Thymeleaf,
+where students learn how to build dynamic, server-driven web apps efficiently.
+
+Check it out!!!
+[HTMX and Spring Boot with Thymeleaf](https://www.linkedin.com/learning/htmx-with-thymeleaf-in-spring-boot)
