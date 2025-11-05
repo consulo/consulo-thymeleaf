@@ -5,22 +5,22 @@ All notable changes to this project will be documented in this file.
 ## [1.2.0] - 2025-06-06
 
 ### New Features
-- Added support for Thymeleaf Synthetic <th:block>
+- Added support for Thymeleaf Synthetic `<th:block>`
 - Added URL completion for th:href and th:action scanning the spring controllers if existing
 - 🚀 Thymeleaf Support Plugin v1.2.0
 Enhancements for IntelliJ IDEA 2023.1 – 2025.2
 
-This release brings major improvements to Thymeleaf development in IntelliJ IDEA — including full support for <th:block>, smart URL and expression completion, and deeper Spring integration.
+This release brings major improvements to Thymeleaf development in IntelliJ IDEA — including full support for `<th:block>`, smart URL and expression completion, and deeper Spring integration.
 
 ### New Features
-#### 1. Support for <th:block> Synthetic Tags
-Added full IDE recognition of Thymeleaf’s non-rendered <th:block> tag.
-New contributor and descriptor classes:
-ThymeleafBlockCompletionContributor
-ThymeleafBlockTagDescriptor
-SimpleThymeleafAttributeDescriptor
-ThymeleafBlockInspectionSuppressor
-Enables IntelliJ autocompletion and validation for <th:block> elements.
+#### 1. Support for `<th:block>` Synthetic Tags
+- Added full IDE recognition of Thymeleaf’s non-rendered `<th:block>` tag.
+- New contributor and descriptor classes:
+- ThymeleafBlockCompletionContributor
+- ThymeleafBlockTagDescriptor
+- SimpleThymeleafAttributeDescriptor
+- ThymeleafBlockInspectionSuppressor
+- Enables IntelliJ autocompletion and validation for `<th:block>` elements.
 
 #### 2. Smart URL Completion for th:href and th:action
   - Automatically scans Spring controllers for @GetMapping, @PostMapping, etc.
