@@ -1,15 +1,21 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.spring;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.searches.AnnotatedElementsSearch;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.java.indexing.search.searches.AnnotatedElementsSearch;
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.PsiAnnotation;
+import com.intellij.java.language.psi.PsiAnnotationMemberValue;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiMethod;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.project.Project;
+import jakarta.annotation.Nonnull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 public class ControllerUrlUtil {
-    // List of Spring mapping annotation names to check
     private static final Set<String> MAPPING_ANNOTATIONS = Set.of(
             "org.springframework.web.bind.annotation.RequestMapping",
             "org.springframework.web.bind.annotation.GetMapping",
@@ -19,16 +25,12 @@ public class ControllerUrlUtil {
             "org.springframework.web.bind.annotation.PatchMapping"
     );
 
-    // Class-level controller annotations
     private static final Set<String> CONTROLLER_ANNOTATIONS = Set.of(
             "org.springframework.stereotype.Controller",
             "org.springframework.web.bind.annotation.RestController"
     );
 
-    /**
-     * Scans the project for @Controller/@RestController classes and finds mapped URLs.
-     */
-    public static List<ControllerMappingInfo> getControllerUrls(@NotNull Project project) {
+    public static List<ControllerMappingInfo> getControllerUrls(@Nonnull Project project) {
         List<ControllerMappingInfo> result = new ArrayList<>();
 
         for (String controllerAnnotation : CONTROLLER_ANNOTATIONS) {
@@ -43,7 +45,7 @@ public class ControllerUrlUtil {
 
                 for (PsiMethod method : controllerClass.getMethods()) {
                     String methodMapping = extractMappingValue(method.getAnnotations());
-                    String httpMethod = extractHttpMethod(method.getAnnotations()); // You'll define this helper
+                    String httpMethod = extractHttpMethod(method.getAnnotations());
                     if (methodMapping != null && !methodMapping.isEmpty()) {
                         StringBuilder fullPath = new StringBuilder();
                         if (classPrefix != null && !classPrefix.isEmpty()) {
@@ -51,13 +53,10 @@ public class ControllerUrlUtil {
                                     classPrefix.substring(0, classPrefix.length() - 1) : classPrefix;
                             fullPath.append(prefix);
                         }
-                        if (methodMapping != null && !methodMapping.isEmpty()) {
-                            if (!methodMapping.startsWith("/")) {
-                                fullPath.append("/");
-                            }
-                            fullPath.append(methodMapping);
+                        if (!methodMapping.startsWith("/")) {
+                            fullPath.append("/");
                         }
-                        // Create the info object
+                        fullPath.append(methodMapping);
                         ControllerMappingInfo info = new ControllerMappingInfo(
                                 fullPath.toString(),
                                 httpMethod,
@@ -97,10 +96,6 @@ public class ControllerUrlUtil {
         return "ANY";
     }
 
-
-    /**
-     * Extracts the first value from supported mapping annotations ("/path").
-     */
     private static String extractMappingValue(PsiAnnotation[] annotations) {
         for (PsiAnnotation annotation : annotations) {
             String qname = annotation.getQualifiedName();
@@ -109,8 +104,7 @@ public class ControllerUrlUtil {
                 if (value == null) value = annotation.findDeclaredAttributeValue("path");
                 if (value != null) {
                     String text = value.getText();
-                    // Remove braces, quotes
-                    if (text.startsWith("{")) text = text.substring(1, text.length()-1);
+                    if (text.startsWith("{")) text = text.substring(1, text.length() - 1);
                     text = text.replaceAll("\"", "").trim();
                     return text;
                 }
@@ -119,4 +113,3 @@ public class ControllerUrlUtil {
         return null;
     }
 }
-

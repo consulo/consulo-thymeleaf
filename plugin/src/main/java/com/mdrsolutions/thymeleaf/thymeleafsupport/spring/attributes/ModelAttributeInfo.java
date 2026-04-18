@@ -1,13 +1,13 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.spring.attributes;
 
-import com.intellij.psi.PsiClass;
+import com.intellij.java.language.psi.PsiClass;
 
 import java.util.Set;
 
 public class ModelAttributeInfo {
     public final String name;
     public final PsiClass psiClass;
-    public final Set<String> viewNames; // e.g. ["user-info", "dashboard"]
+    public final Set<String> viewNames;
 
     public ModelAttributeInfo(String name, PsiClass psiClass, Set<String> viewNames) {
         this.name = name;
@@ -15,4 +15,3 @@ public class ModelAttributeInfo {
         this.viewNames = viewNames;
     }
 }
-

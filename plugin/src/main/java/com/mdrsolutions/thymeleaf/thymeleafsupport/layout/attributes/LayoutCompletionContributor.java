@@ -1,15 +1,21 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.layout.attributes;
 
-import com.intellij.codeInsight.completion.CompletionContributor;
-import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.patterns.PlatformPatterns;
-import com.intellij.patterns.XmlPatterns;
-import com.intellij.psi.xml.XmlTokenType;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.html.language.HTMLLanguage;
+import consulo.language.Language;
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionType;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.logging.Logger;
+import consulo.xml.language.psi.pattern.XmlPatterns;
+import consulo.xml.language.psi.XmlTokenType;
+import jakarta.annotation.Nonnull;
 
+@ExtensionImpl
 public class LayoutCompletionContributor extends CompletionContributor {
 
     private static final Logger logger = Logger.getInstance(LayoutCompletionContributor.class);
+
     public LayoutCompletionContributor() {
         logger.info("LayoutCompletionContributor loaded");
         extend(
@@ -18,5 +24,11 @@ public class LayoutCompletionContributor extends CompletionContributor {
                         .withParent(XmlPatterns.xmlAttribute()),
                 new LayoutAttributeCompletionProvider()
         );
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
     }
 }

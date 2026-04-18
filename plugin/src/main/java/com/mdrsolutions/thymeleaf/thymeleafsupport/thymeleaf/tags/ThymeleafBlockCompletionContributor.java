@@ -1,23 +1,30 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags;
 
-import com.intellij.codeInsight.completion.*;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.icons.AllIcons;
-import com.intellij.patterns.XmlPatterns;
-import com.intellij.util.ProcessingContext;
-import org.jetbrains.annotations.NotNull;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.AllIcons;
+import consulo.html.language.HTMLLanguage;
+import consulo.language.Language;
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionProvider;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.CompletionType;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.util.ProcessingContext;
+import consulo.xml.language.psi.pattern.XmlPatterns;
+import jakarta.annotation.Nonnull;
 
+@ExtensionImpl
 public class ThymeleafBlockCompletionContributor extends CompletionContributor {
     public ThymeleafBlockCompletionContributor() {
         extend(
                 CompletionType.BASIC,
-                // Suggest when completing tag names
                 XmlPatterns.psiElement().withParent(XmlPatterns.xmlTag()),
-                new CompletionProvider<CompletionParameters>() {
+                new CompletionProvider() {
                     @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters,
-                                                  @NotNull ProcessingContext context,
-                                                  @NotNull CompletionResultSet result) {
+                    public void addCompletions(@Nonnull CompletionParameters parameters,
+                                               @Nonnull ProcessingContext context,
+                                               @Nonnull CompletionResultSet result) {
                         result.addElement(
                                 LookupElementBuilder.create("th:block")
                                         .withIcon(AllIcons.Nodes.Tag)
@@ -28,5 +35,11 @@ public class ThymeleafBlockCompletionContributor extends CompletionContributor {
                     }
                 }
         );
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
     }
 }

@@ -1,7 +1,8 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport;
 
-import com.intellij.openapi.util.IconLoader;
+import com.mdrsolutions.thymeleaf.impl.icon.ThymeleafIconGroup;
+import consulo.ui.image.Image;
 
 public class Thymeleaf {
-    public static final javax.swing.Icon ICON = IconLoader.getIcon("/META-INF/pluginIcon.svg", Thymeleaf.class);
+    public static final Image ICON = ThymeleafIconGroup.thymeleaf();
 }

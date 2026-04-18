@@ -1,10 +1,12 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.impl.source.xml.XmlElementDescriptorProvider;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.xml.XmlElementDescriptor;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.logging.Logger;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.psi.impl.source.xml.XmlElementDescriptorProvider;
+import consulo.xml.language.psi.XmlTag;
 
+@ExtensionImpl
 public class ThymeleafElementDescriptorProvider implements XmlElementDescriptorProvider {
 
     private static final Logger logger = Logger.getInstance(ThymeleafElementDescriptorProvider.class);
@@ -18,4 +20,3 @@ public class ThymeleafElementDescriptorProvider implements XmlElementDescriptorP
         return null;
     }
 }
-

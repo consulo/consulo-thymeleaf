@@ -1,15 +1,14 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.xml.XmlAttributeDescriptor;
-import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlElementsGroup;
-import com.intellij.xml.XmlNSDescriptor;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import consulo.language.psi.PsiElement;
+import consulo.logging.Logger;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.descriptor.XmlElementDescriptor;
+import consulo.xml.descriptor.XmlElementsGroup;
+import consulo.xml.descriptor.XmlNSDescriptor;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
+import jakarta.annotation.Nullable;
 
 public class ThymeleafBlockTagDescriptor implements XmlElementDescriptor {
 
@@ -24,8 +23,7 @@ public class ThymeleafBlockTagDescriptor implements XmlElementDescriptor {
 
     @Override
     public void init(PsiElement element) {
-        /* doing this to attempt to satisfy Intellij's declaration lookup */
-        if(element instanceof XmlTag){
+        if (element instanceof XmlTag) {
             this.tag = (XmlTag) element;
         }
     }
@@ -46,7 +44,7 @@ public class ThymeleafBlockTagDescriptor implements XmlElementDescriptor {
     }
 
     @Override
-    public @NonNls String getName(PsiElement context) {
+    public String getName(PsiElement context) {
         return "th:block";
     }
 
@@ -71,12 +69,14 @@ public class ThymeleafBlockTagDescriptor implements XmlElementDescriptor {
     }
 
     @Override
-    public @Nullable String getDefaultValue() {
+    @Nullable
+    public String getDefaultValue() {
         return "";
     }
 
     @Override
-    public @Nullable XmlElementsGroup getTopGroup() {
+    @Nullable
+    public XmlElementsGroup getTopGroup() {
         return null;
     }
 
@@ -86,8 +86,9 @@ public class ThymeleafBlockTagDescriptor implements XmlElementDescriptor {
     }
 
     @Override
-    public @Nullable XmlAttributeDescriptor getAttributeDescriptor(@NonNls String attributeName, @Nullable XmlTag context) {
-        logger.info("getAttributeDescriptor called for " + attributeName + " on <" + context.getName() + ">");
+    @Nullable
+    public XmlAttributeDescriptor getAttributeDescriptor(String attributeName, @Nullable XmlTag context) {
+        logger.info("getAttributeDescriptor called for " + attributeName + " on <" + (context == null ? "null" : context.getName()) + ">");
         if (attributeName != null && attributeName.startsWith("th:")) {
             logger.info("returning new SimpleThymeleafAttributeDescriptor");
             return new SimpleThymeleafAttributeDescriptor(attributeName);
@@ -96,7 +97,8 @@ public class ThymeleafBlockTagDescriptor implements XmlElementDescriptor {
     }
 
     @Override
-    public @Nullable XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute) {
+    @Nullable
+    public XmlAttributeDescriptor getAttributeDescriptor(XmlAttribute attribute) {
         String name = attribute.getName();
         logger.info("Attempting to capture XmlAttribute: " + name);
         if (name.startsWith("th:") || name.startsWith("sec:") || name.startsWith("layout:")) {
@@ -106,5 +108,8 @@ public class ThymeleafBlockTagDescriptor implements XmlElementDescriptor {
         return null;
     }
 
-
+    @Override
+    public Object[] getDependences() {
+        return new Object[0];
+    }
 }

@@ -1,18 +1,18 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.expression;
 
-import com.intellij.codeInsight.completion.CompletionUtilCore;
-import com.intellij.codeInsight.completion.InsertHandler;
-import com.intellij.codeInsight.completion.InsertionContext;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.xml.XmlAttributeValue;
-import org.jetbrains.annotations.NotNull;
+import consulo.codeEditor.Editor;
+import consulo.document.Document;
+import consulo.document.util.TextRange;
+import consulo.language.editor.completion.CompletionUtilCore;
+import consulo.language.editor.completion.lookup.InsertHandler;
+import consulo.language.editor.completion.lookup.InsertionContext;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.project.Project;
+import consulo.xml.language.psi.XmlAttributeValue;
+import jakarta.annotation.Nonnull;
 
 import static com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.expression.ThymeleafExpressionCompletionContributor.FULL_PROP_CHAIN_KEY;
 
@@ -21,7 +21,7 @@ public abstract class ThymeleafExpressionInsertHandler implements InsertHandler<
     protected abstract String getExpressionPrefix();
 
     @Override
-    public void handleInsert(@NotNull InsertionContext context, @NotNull LookupElement item) {
+    public void handleInsert(@Nonnull InsertionContext context, @Nonnull LookupElement item) {
         Editor editor = context.getEditor();
         Document doc = editor.getDocument();
         Project project = editor.getProject();

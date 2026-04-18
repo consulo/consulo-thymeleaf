@@ -1,17 +1,24 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.attributes;
 
-import com.intellij.codeInsight.completion.*;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.patterns.PlatformPatterns;
-import com.intellij.patterns.XmlPatterns;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.util.ProcessingContext;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.spring.ControllerMappingInfo;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.spring.ControllerUrlUtil;
-import org.jetbrains.annotations.NotNull;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.html.language.HTMLLanguage;
+import consulo.language.Language;
+import consulo.language.editor.completion.CompletionContributor;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionProvider;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.CompletionType;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.pattern.PlatformPatterns;
+import consulo.language.util.ProcessingContext;
+import consulo.xml.language.psi.pattern.XmlPatterns;
+import jakarta.annotation.Nonnull;
+
 import java.util.List;
 
+@ExtensionImpl
 public class ThymeleafUrlCompletionContributor extends CompletionContributor {
     public ThymeleafUrlCompletionContributor() {
         extend(
@@ -21,12 +28,11 @@ public class ThymeleafUrlCompletionContributor extends CompletionContributor {
                                 .withParent(XmlPatterns.xmlAttribute()
                                         .withName("th:href", "th:action"))
                         ),
-                new CompletionProvider<CompletionParameters>() {
+                new CompletionProvider() {
                     @Override
-                    protected void addCompletions(@NotNull CompletionParameters parameters,
-                                                  @NotNull ProcessingContext context,
-                                                  @NotNull CompletionResultSet result) {
-                        // Get all controller URLs (use your utility below)
+                    public void addCompletions(@Nonnull CompletionParameters parameters,
+                                               @Nonnull ProcessingContext context,
+                                               @Nonnull CompletionResultSet result) {
                         List<ControllerMappingInfo> mappings = ControllerUrlUtil.getControllerUrls(parameters.getPosition().getProject());
                         for (ControllerMappingInfo info : mappings) {
                             result.addElement(
@@ -39,5 +45,10 @@ public class ThymeleafUrlCompletionContributor extends CompletionContributor {
                 }
         );
     }
-}
 
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
+    }
+}

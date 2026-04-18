@@ -1,25 +1,37 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.spring.attributes;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.searches.AnnotatedElementsSearch;
-import com.intellij.psi.util.PsiUtil;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.java.indexing.search.searches.AnnotatedElementsSearch;
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.JavaRecursiveElementWalkingVisitor;
+import com.intellij.java.language.psi.PsiAnnotation;
+import com.intellij.java.language.psi.PsiAnnotationMemberValue;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiExpression;
+import com.intellij.java.language.psi.PsiLiteralExpression;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiMethodCallExpression;
+import com.intellij.java.language.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiReferenceExpression;
+import com.intellij.java.language.psi.PsiReturnStatement;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.java.language.psi.util.PsiUtil;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.project.Project;
+import jakarta.annotation.Nonnull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class SpringModelAttributeUtil {
 
-    // Add relevant Spring controller annotations
     private static final Set<String> CONTROLLER_ANNOTATIONS = Set.of(
             "org.springframework.stereotype.Controller",
             "org.springframework.web.bind.annotation.RestController"
     );
 
-    /**
-     * Returns all model attributes as a list of ModelAttributeInfo (name, type)
-     */
     public static List<ModelAttributeInfo> getModelAttributes(Project project) {
         List<ModelAttributeInfo> results = new ArrayList<>();
 
@@ -35,13 +47,8 @@ public class SpringModelAttributeUtil {
                 for (PsiMethod method : controller.getMethods()) {
                     Set<String> viewNames = getViewNamesFromMethod(method);
 
-                    // 1. Handle @ModelAttribute methods
                     processModelAttributeMethods(method, results, viewNames);
-
-                    // 2. Handle @ModelAttribute parameters
                     processModelAttributeParameters(method, results, viewNames);
-
-                    // 3. Handle model.addAttribute() calls
                     processModelAddAttributeCalls(method, results, viewNames);
                 }
             }
@@ -53,7 +60,7 @@ public class SpringModelAttributeUtil {
         Set<String> viewNames = new HashSet<>();
         method.accept(new JavaRecursiveElementWalkingVisitor() {
             @Override
-            public void visitReturnStatement(@NotNull PsiReturnStatement statement) {
+            public void visitReturnStatement(@Nonnull PsiReturnStatement statement) {
                 PsiExpression expr = statement.getReturnValue();
                 if (expr instanceof PsiLiteralExpression) {
                     Object value = ((PsiLiteralExpression) expr).getValue();
@@ -110,11 +117,10 @@ public class SpringModelAttributeUtil {
                 }
             }
 
-            // Also handle Model/ModelMap parameters
             if (isModelType(param.getType())) {
                 method.accept(new JavaRecursiveElementWalkingVisitor() {
                     @Override
-                    public void visitMethodCallExpression(@NotNull PsiMethodCallExpression expr) {
+                    public void visitMethodCallExpression(@Nonnull PsiMethodCallExpression expr) {
                         checkForAddAttributeCall(expr, param.getName(), results, viewNames);
                         super.visitMethodCallExpression(expr);
                     }
@@ -128,7 +134,7 @@ public class SpringModelAttributeUtil {
                                                       Set<String> viewNames) {
         method.accept(new JavaRecursiveElementWalkingVisitor() {
             @Override
-            public void visitMethodCallExpression(@NotNull PsiMethodCallExpression expr) {
+            public void visitMethodCallExpression(@Nonnull PsiMethodCallExpression expr) {
                 checkForAddAttributeCall(expr, "model", results, viewNames);
                 super.visitMethodCallExpression(expr);
             }

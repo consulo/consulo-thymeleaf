@@ -1,21 +1,19 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.springsecurity.attributes;
 
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.html.HtmlTag;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.Thymeleaf;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.base.AttributeUtil;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.base.BaseAttributeCompletionProvider;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.namespace.ThymeleafNamespaceRegistry;
-
-import javax.swing.*;
+import consulo.html.language.psi.HtmlTag;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.logging.Logger;
+import consulo.ui.image.Image;
 
 public class SpringSecurityAttributeCompletionProvider extends BaseAttributeCompletionProvider {
 
     private static final Logger logger = Logger.getInstance(SpringSecurityAttributeCompletionProvider.class);
-
 
     @Override
     protected void addCompletionsForType(CompletionParameters parameters, CompletionResultSet resultSet, AttributeUtil attributeUtil) {
@@ -50,7 +48,7 @@ public class SpringSecurityAttributeCompletionProvider extends BaseAttributeComp
     }
 
     @Override
-    public Icon getIcon() {
+    public Image getIcon() {
         return Thymeleaf.ICON;
     }
 

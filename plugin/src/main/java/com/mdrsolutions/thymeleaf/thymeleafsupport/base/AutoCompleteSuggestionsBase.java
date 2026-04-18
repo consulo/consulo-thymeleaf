@@ -1,11 +1,11 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.base;
 
-import com.intellij.psi.html.HtmlTag;
+import consulo.html.language.psi.HtmlTag;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AutoCompleteSuggestionsBase <T extends BaseAttributeInfo>{
+public abstract class AutoCompleteSuggestionsBase<T extends BaseAttributeInfo> {
     protected final HtmlTag htmlTag;
     protected final String partialAttribute;
     protected final List<T> attributes = new ArrayList<>();
@@ -20,6 +20,5 @@ public abstract class AutoCompleteSuggestionsBase <T extends BaseAttributeInfo>{
         return attributes;
     }
 
-    // Each subclass will implement this method to add specific attributes
     protected abstract void addAttributes();
 }

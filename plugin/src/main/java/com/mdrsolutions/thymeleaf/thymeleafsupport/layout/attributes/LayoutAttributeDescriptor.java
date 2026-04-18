@@ -1,16 +1,13 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.layout.attributes;
 
-import com.intellij.openapi.util.NlsSafe;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.meta.PsiPresentableMetaData;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.ArrayUtil;
 import com.intellij.xml.impl.BasicXmlAttributeDescriptor;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.Thymeleaf;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.meta.PsiPresentableMetaData;
+import consulo.ui.image.Image;
+import consulo.util.collection.ArrayUtil;
+import consulo.xml.language.psi.XmlTag;
+import jakarta.annotation.Nullable;
 
 public class LayoutAttributeDescriptor extends BasicXmlAttributeDescriptor implements PsiPresentableMetaData {
     public LayoutAttributeDescriptor(String attributeName, XmlTag context) {
@@ -23,15 +20,17 @@ public class LayoutAttributeDescriptor extends BasicXmlAttributeDescriptor imple
     private final String name;
     private final XmlTag xmlTag;
     private final LayoutAttributeInfo info;
-    private final Icon icon;
+    private final Image icon;
 
     @Override
-    public @Nullable @Nls String getTypeName() {
+    @Nullable
+    public String getTypeName() {
         return info.getTypeText();
     }
 
     @Override
-    public @Nullable Icon getIcon() {
+    @Nullable
+    public Image getIcon() {
         return icon;
     }
 
@@ -61,13 +60,12 @@ public class LayoutAttributeDescriptor extends BasicXmlAttributeDescriptor imple
     }
 
     @Override
-    public @NlsSafe String getName() {
+    public String getName() {
         return name;
     }
 
     @Override
     public void init(PsiElement element) {
-
     }
 
     @Override
@@ -83,5 +81,10 @@ public class LayoutAttributeDescriptor extends BasicXmlAttributeDescriptor imple
     @Override
     public String[] getEnumeratedValues() {
         return ArrayUtil.EMPTY_STRING_ARRAY;
+    }
+
+    @Override
+    public Object[] getDependences() {
+        return ArrayUtil.EMPTY_OBJECT_ARRAY;
     }
 }

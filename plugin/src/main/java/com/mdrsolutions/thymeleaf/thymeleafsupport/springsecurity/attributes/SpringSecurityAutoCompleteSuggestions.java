@@ -1,10 +1,9 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.springsecurity.attributes;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.html.HtmlTag;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.base.AutoCompleteSuggestionsBase;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.layout.attributes.LayoutAttributeInfo;
-import com.mdrsolutions.thymeleaf.thymeleafsupport.layout.attributes.LayoutAttributeUtil;
+import consulo.html.language.psi.HtmlTag;
+import consulo.logging.Logger;
 
 public class SpringSecurityAutoCompleteSuggestions extends AutoCompleteSuggestionsBase<LayoutAttributeInfo> {
 
@@ -12,15 +11,15 @@ public class SpringSecurityAutoCompleteSuggestions extends AutoCompleteSuggestio
 
     private SpringSecurityAttributeUtil springSecurityAttributeUtil;
 
-    public SpringSecurityAutoCompleteSuggestions(HtmlTag htmlTag,
-                                                 String partialAttribute ) {
+    public SpringSecurityAutoCompleteSuggestions(HtmlTag htmlTag, String partialAttribute) {
         super(htmlTag, partialAttribute);
         this.springSecurityAttributeUtil = SpringSecurityAttributeUtil.getInstance();
         addAttributes();
     }
+
     @Override
     protected void addAttributes() {
-        if(springSecurityAttributeUtil == null){
+        if (springSecurityAttributeUtil == null) {
             springSecurityAttributeUtil = SpringSecurityAttributeUtil.getInstance();
         }
         logger.info("size of attributes added is " + springSecurityAttributeUtil.getAttributes().size());
@@ -31,5 +30,4 @@ public class SpringSecurityAutoCompleteSuggestions extends AutoCompleteSuggestio
             }
         }
     }
-
 }

@@ -1,7 +1,7 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.attributes;
 
-import com.intellij.openapi.diagnostic.Logger;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.base.AttributeUtil;
+import consulo.logging.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +27,6 @@ public class ThymeleafAttributeUtil extends AttributeUtil {
                 }
             }
         }
-        logger.info("ThymeleafAttributeUtil instance returned");
         return instance;
     }
 
@@ -55,7 +54,7 @@ public class ThymeleafAttributeUtil extends AttributeUtil {
                 "th:xmlspace", "th:with", "th:fragment", "th:case", "th:switch", "th:object", "th:utext",
                 "th:insert");
     }
-    // New method to add descriptions for attributes
+
     private void addDescriptions() {
         attributeDescriptions.put("th:text", "Inserts the result of evaluating the expression into the element as text, escaping any HTML.");
         attributeDescriptions.put("th:each", "Iterates over a collection and repeats the element for each item in the collection.");
@@ -99,9 +98,9 @@ public class ThymeleafAttributeUtil extends AttributeUtil {
         attributeDescriptions.put("th:draggable", "Indicates whether an element can be dragged.");
         attributeDescriptions.put("th:dropzone", "Specifies where an element can be dropped during a drag-and-drop operation.");
         attributeDescriptions.put("th:enctype", "Defines the encoding type of a form when submitting data.");
-        attributeDescriptions.put("th:errors","a specialized attribute which builds a list with all the errors for the specified selector, separated by <br />");
-        attributeDescriptions.put("th:errorclass","allows setting a CSS class to a form input if that field has errors");
-        attributeDescriptions.put("th:field","Applied to a form field tag (input, select, textarea…), it will read the name of the field to be examined from any existing name");
+        attributeDescriptions.put("th:errors", "a specialized attribute which builds a list with all the errors for the specified selector, separated by <br />");
+        attributeDescriptions.put("th:errorclass", "allows setting a CSS class to a form input if that field has errors");
+        attributeDescriptions.put("th:field", "Applied to a form field tag (input, select, textarea…), it will read the name of the field to be examined from any existing name");
         attributeDescriptions.put("th:for", "Links a label to a form input by its id.");
         attributeDescriptions.put("th:form", "Defines which form an element belongs to.");
         attributeDescriptions.put("th:formaction", "Specifies the action URL for a form element.");
@@ -179,12 +178,9 @@ public class ThymeleafAttributeUtil extends AttributeUtil {
         attributeDescriptions.put("th:object", "Represents a complex object and binds its properties.");
         attributeDescriptions.put("th:utext", "Inserts unescaped text from the evaluation of an expression.");
         attributeDescriptions.put("th:insert", "Inserts the content of a fragment or another template into the current template, similar to an include.");
-
     }
 
-    // Method to get the description of a Thymeleaf attribute
     public static String getAttributeDescription(String attributeName) {
         return attributeDescriptions.getOrDefault(attributeName, "No description available");
     }
-
 }

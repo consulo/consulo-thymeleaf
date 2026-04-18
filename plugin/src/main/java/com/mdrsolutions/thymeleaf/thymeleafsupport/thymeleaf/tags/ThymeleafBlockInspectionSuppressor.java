@@ -1,24 +1,26 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.tags;
 
-import com.intellij.codeInspection.InspectionSuppressor;
-import com.intellij.codeInspection.SuppressQuickFix;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.xml.XmlTag;
-import org.jetbrains.annotations.NotNull;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.html.language.HTMLLanguage;
+import consulo.language.Language;
+import consulo.language.editor.inspection.InspectionSuppressor;
+import consulo.language.editor.inspection.SuppressQuickFix;
+import consulo.language.psi.PsiElement;
+import consulo.logging.Logger;
+import consulo.xml.language.psi.XmlTag;
+import jakarta.annotation.Nonnull;
 
+@ExtensionImpl
 public class ThymeleafBlockInspectionSuppressor implements InspectionSuppressor {
 
     private static final Logger logger = Logger.getInstance(ThymeleafBlockInspectionSuppressor.class);
 
     @Override
-    public boolean isSuppressedFor(@NotNull PsiElement element, @NotNull String inspectionId) {
-        // Suppress for our specific tag and inspection
+    public boolean isSuppressedFor(@Nonnull PsiElement element, @Nonnull String inspectionId) {
         logger.info("ThymeleafBlockInspectionSuppressor inspectionId: " + inspectionId + " element: " + element.getText());
         if (element instanceof XmlTag tag) {
             logger.info("isSuppressedFor --> " + tag.getName());
             if ("th:block".equalsIgnoreCase(tag.getName())) {
-                // The inspection for "cannot resolve symbol" is called "UnresolvedXmlReference"
                 logger.info("attempting to return UnresolvedXmlReference");
                 return "UnresolvedXmlReference".equals(inspectionId);
             }
@@ -27,9 +29,15 @@ public class ThymeleafBlockInspectionSuppressor implements InspectionSuppressor 
     }
 
     @Override
-    public SuppressQuickFix @NotNull [] getSuppressActions(@NotNull PsiElement element, @NotNull String inspectionId) {
-        // No quick fixes offered for suppression in this case
+    @Nonnull
+    public SuppressQuickFix[] getSuppressActions(@Nonnull PsiElement element, @Nonnull String inspectionId) {
         logger.info("getSuppressActions called");
         return SuppressQuickFix.EMPTY_ARRAY;
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return HTMLLanguage.INSTANCE;
     }
 }

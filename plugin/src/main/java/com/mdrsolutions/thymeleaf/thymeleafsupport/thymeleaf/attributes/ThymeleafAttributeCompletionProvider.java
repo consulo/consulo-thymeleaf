@@ -1,16 +1,15 @@
 package com.mdrsolutions.thymeleaf.thymeleafsupport.thymeleaf.attributes;
 
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionResultSet;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.html.HtmlTag;
-import com.mdrsolutions.thymeleaf.thymeleafsupport.base.BaseAttributeCompletionProvider;
-import com.mdrsolutions.thymeleaf.thymeleafsupport.base.AttributeUtil;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.Thymeleaf;
+import com.mdrsolutions.thymeleaf.thymeleafsupport.base.AttributeUtil;
+import com.mdrsolutions.thymeleaf.thymeleafsupport.base.BaseAttributeCompletionProvider;
 import com.mdrsolutions.thymeleaf.thymeleafsupport.namespace.ThymeleafNamespaceRegistry;
-
-import javax.swing.Icon;
+import consulo.html.language.psi.HtmlTag;
+import consulo.language.editor.completion.CompletionParameters;
+import consulo.language.editor.completion.CompletionResultSet;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.logging.Logger;
+import consulo.ui.image.Image;
 
 public class ThymeleafAttributeCompletionProvider extends BaseAttributeCompletionProvider {
 
@@ -26,7 +25,6 @@ public class ThymeleafAttributeCompletionProvider extends BaseAttributeCompletio
         return new ThymeleafAutoCompleteSuggestions(tag, partialAttribute);
     }
 
-    // Define the buildLookupElement method that creates the lookup element
     private LookupElementBuilder buildLookupElement(String attribute, String typeText) {
         return LookupElementBuilder.create(attribute)
                 .withCaseSensitivity(false)
@@ -55,7 +53,7 @@ public class ThymeleafAttributeCompletionProvider extends BaseAttributeCompletio
     }
 
     @Override
-    public Icon getIcon() {
+    public Image getIcon() {
         return Thymeleaf.ICON;
     }
 }
