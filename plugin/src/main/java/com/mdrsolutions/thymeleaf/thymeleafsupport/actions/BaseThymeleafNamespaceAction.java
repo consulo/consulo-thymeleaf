@@ -14,10 +14,11 @@ import consulo.project.ui.notification.Notifications;
 import consulo.ui.ex.action.ActionUpdateThread;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-public abstract class BaseThymeleafNamespaceAction extends AnAction {
+public abstract class BaseThymeleafNamespaceAction extends AnAction implements AnActionWithSyncUpdate {
     private static final Logger logger = Logger.getInstance(BaseThymeleafNamespaceAction.class);
 
     protected static final ThymeleafNamespaceRegistry.NamespaceAttribute THYMELEAF_SPRING_SECURITY_NAMESPACE = ThymeleafNamespaceRegistry.NamespaceAttribute.SPRING_SECURITY;
