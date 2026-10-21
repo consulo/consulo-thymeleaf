@@ -5,12 +5,11 @@ import consulo.annotation.component.ActionImpl;
 import consulo.annotation.component.ActionParentRef;
 import consulo.annotation.component.ActionRef;
 import consulo.application.ApplicationManager;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
-import consulo.project.ui.notification.Notification;
-import consulo.project.ui.notification.NotificationType;
-import consulo.project.ui.notification.Notifications;
+import consulo.project.ui.notification.NotificationService;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.virtualFileSystem.VirtualFile;
 import jakarta.annotation.Nonnull;
@@ -56,11 +55,17 @@ public class AddThymeleafNamespace extends BaseThymeleafNamespaceAction {
                 String newModifiedHtml = document.outerHtml();
                 htmlFile.setBinaryContent(newModifiedHtml.getBytes(StandardCharsets.UTF_8));
 
-                Notifications.Bus.notify(new Notification(getNotificationGroup(), "File transformed",
-                        "Thymeleaf Namespace '" + THYMELEAF_NAMESPACE.getAttribute() + "=\"" + THYMELEAF_NAMESPACE_URI + "\"' added to html tag successfully.",
-                        NotificationType.INFORMATION));
+                NotificationService.getInstance()
+                    .newInfo(getNotificationGroup())
+                    .title(LocalizeValue.localizeTODO("File transformed"))
+                    .content(LocalizeValue.localizeTODO("Thymeleaf Namespace '" + THYMELEAF_NAMESPACE.getAttribute() + "=\"" + THYMELEAF_NAMESPACE_URI + "\"' added to html tag successfully."))
+                    .notify(project);
             } catch (Exception e) {
-                Notifications.Bus.notify(new Notification(getNotificationGroup(), "Cannot write file", e.getMessage(), NotificationType.ERROR));
+                NotificationService.getInstance()
+                    .newError(getNotificationGroup())
+                    .title(LocalizeValue.localizeTODO("Cannot write file"))
+                    .content(LocalizeValue.of(e))
+                    .notify(project);
             }
         });
     }

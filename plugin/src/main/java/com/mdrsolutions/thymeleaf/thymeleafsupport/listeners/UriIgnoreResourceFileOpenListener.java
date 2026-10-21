@@ -10,10 +10,10 @@ import consulo.fileEditor.FileEditor;
 import consulo.fileEditor.FileEditorManager;
 import consulo.fileEditor.TextEditor;
 import consulo.fileEditor.event.FileEditorManagerListener;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
-import consulo.project.ui.notification.Notification;
-import consulo.project.ui.notification.NotificationType;
-import consulo.project.ui.notification.Notifications;
+import consulo.project.Project;
+import consulo.project.ui.notification.NotificationService;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.javaee.ExternalResourceManagerEx;
 import jakarta.annotation.Nonnull;
@@ -33,13 +33,13 @@ public final class UriIgnoreResourceFileOpenListener implements FileEditorManage
         }
         for (FileEditor editor : source.getEditors(file)) {
             if (editor instanceof TextEditor) {
-                initializeIgnoredResources();
+                initializeIgnoredResources(source.getProject());
                 return;
             }
         }
     }
 
-    private void initializeIgnoredResources() {
+    private void initializeIgnoredResources(Project project) {
         logger.info("UriIgnoreResourceFileOpenListener.initializeIgnoredResources()");
         ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
             ExternalResourceManagerEx externalResourceManager = ExternalResourceManagerEx.getInstanceEx();
@@ -58,11 +58,11 @@ public final class UriIgnoreResourceFileOpenListener implements FileEditorManage
             }
 
             if (added) {
-                Notifications.Bus.notify(new Notification(
-                        ThymeleafNotificationGroupContributor.URI_IGNORE_RESOURCE,
-                        "DTD and URI Resources",
-                        "Related Thymeleaf Layout Namespaces have been safely ignored.",
-                        NotificationType.INFORMATION));
+                NotificationService.getInstance()
+                    .newInfo(ThymeleafNotificationGroupContributor.URI_IGNORE_RESOURCE)
+                    .title(LocalizeValue.localizeTODO("DTD and URI Resources"))
+                    .content(LocalizeValue.localizeTODO("Related Thymeleaf Layout Namespaces have been safely ignored."))
+                    .notify(project);
             }
         }));
     }

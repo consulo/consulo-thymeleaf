@@ -6,11 +6,11 @@ import consulo.language.editor.CommonDataKeys;
 import consulo.language.file.FileTypeManager;
 import consulo.language.file.LanguageFileType;
 import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
-import consulo.project.ui.notification.Notification;
+import consulo.project.Project;
 import consulo.project.ui.notification.NotificationGroup;
-import consulo.project.ui.notification.NotificationType;
-import consulo.project.ui.notification.Notifications;
+import consulo.project.ui.notification.NotificationService;
 import consulo.ui.ex.action.ActionUpdateThread;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
@@ -51,14 +51,22 @@ public abstract class BaseThymeleafNamespaceAction extends AnAction implements A
         PsiFile selectedFile = anActionEvent.getData(CommonDataKeys.PSI_FILE);
         if (selectedFile == null) {
             if (showNotifications) {
-                Notifications.Bus.notify(new Notification(group, "No file selected", "Please select an HTML file first", NotificationType.ERROR));
+                NotificationService.getInstance()
+                    .newError(group)
+                    .title(LocalizeValue.localizeTODO("No file selected"))
+                    .content(LocalizeValue.localizeTODO("Please select an HTML file first"))
+                    .notify(anActionEvent.getData(Project.KEY));
             }
             return null;
         }
         LanguageFileType html = (LanguageFileType) FileTypeManager.getInstance().getStdFileType("HTML");
         if (!html.equals(selectedFile.getFileType())) {
             if (showNotifications) {
-                Notifications.Bus.notify(new Notification(group, "Incorrect file selected", "Please select an HTML file", NotificationType.ERROR));
+                NotificationService.getInstance()
+                    .newError(group)
+                    .title(LocalizeValue.localizeTODO("Incorrect file selected"))
+                    .content(LocalizeValue.localizeTODO("Please select an HTML file"))
+                    .notify(anActionEvent.getData(Project.KEY));
             }
             return null;
         }
